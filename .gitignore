@@ -1,3 +1,10 @@
+# Dataset folders
+test/
+train/
+
+# Sample submissions
+sample_submission.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
