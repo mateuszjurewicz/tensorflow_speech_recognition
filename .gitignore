@@ -4,6 +4,8 @@
 # Dataset folders
 test/
 train/
+train_backup/
+data/
 
 # Sample submissions
 sample_submission.csv
