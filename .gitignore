@@ -1,6 +1,9 @@
 # pycharm
 .idea
 
+# mixed sounds file
+mixed_sounds.wav
+
 # Dataset folders
 test/
 train/
