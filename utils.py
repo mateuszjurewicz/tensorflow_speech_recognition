@@ -4,6 +4,7 @@ import librosa.display
 import matplotlib.pyplot as plt
 import numpy as np
 
+from pydub import AudioSegment
 from scipy.io import wavfile
 
 
@@ -26,7 +27,18 @@ def display_audio(path_to_wav):
 
 
 def graph_waveform(wav_file):
+    """
+    Graph a waveform from a .wav file.
+    """
     data, sampling_rate = librosa.load(wav_file)
+    plt.figure(figsize=(12, 4))
+    librosa.display.waveplot(data, sr=sampling_rate)
+
+
+def graph_waveform_from_data(data, sampling_rate):
+    """
+    Graph a waveform directly from data and sampling rate.
+    """
     plt.figure(figsize=(12, 4))
     librosa.display.waveplot(data, sr=sampling_rate)
 
@@ -189,3 +201,49 @@ def graph_chromagrams(list_of_wavs, grid_dimensions=(3, 3)):
 
         # Describe
         plt.title('{}'.format(wav_file))
+
+
+def mix_audio(input_file, background_file, output_path, start_position=0, volume_adjustment=0):
+    """
+    A function for mixing 2 .wav files together, starting at start_position,
+    adjusting volume of background_file by volume_adjustment (in decibels).
+    It creates a new .wav file in the location specified by output_path.
+    """
+    # grab the two files
+    sound1 = AudioSegment.from_wav(input_file)
+    sound2 = AudioSegment.from_wav(background_file)
+
+    # adjust volume if necessary
+    sound2 = sound2 - volume_adjustment
+
+    # mix sound2 with sound1, starting at start_position into sound1)
+    output = sound1.overlay(sound2, position=start_position)
+
+    # save the result
+    output.export(output_path, format="wav")
+
+    # return the path to the new .wav file
+    return output_path
+
+
+def augment_with_white_noise(input_file, output_path, wn_factor=0.01):
+    """
+    Take a .wav input_file, add random white noise to it and store
+    the new .wav file in output_path. You can also adjust the amount of white noise
+    via the wn_factor.
+    """
+    # grab the content of the .wav input_file and the sampling rate
+    sr, data = get_wav_info(input_file)
+
+    # add random white noise
+    wn = np.random.randn(len(data))
+    data_wn = data + wn_factor * wn
+
+    # turn to integers
+    data_wn = data_wn.astype(np.int16)
+
+    # create the file with white noise
+    wavfile.write(output_path, sr, data_wn)
+
+    # return the path to the created file
+    return output_path
