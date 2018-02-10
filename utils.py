@@ -247,3 +247,25 @@ def augment_with_white_noise(input_file, output_path, wn_factor=0.01):
 
     # return the path to the created file
     return output_path
+
+
+def augment_with_shift(input_file, output_path, shift_factor=None):
+    """
+    Take a .wav input_file, shift its content by value of shift_factor.
+    Save the new .wav file in output_path. You can also adjust the amount of shift
+    via shift_factor.
+    """
+    # grab the content of the .wav input_file and the sampling rate
+    sr, data = get_wav_info(input_file)
+
+    # shift the data by 1/8th of the sampling rate, unless another value was provided
+    if not shift_factor:
+        shift_factor = sr // 8
+
+    data_shifted = np.roll(data, shift_factor)
+
+    # create the file with shifted data
+    wavfile.write(output_path, sr, data_shifted)
+
+    # return the path to the created file
+    return output_path
