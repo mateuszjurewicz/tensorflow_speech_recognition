@@ -269,3 +269,13 @@ def augment_with_shift(input_file, output_path, shift_factor=None):
 
     # return the path to the created file
     return output_path
+
+
+def extract_mfccs(wav_file):
+    """
+    Take a file and return the mel-frequency cepstrum.
+    Use the file's default sampling rate (instead of librosa's 22050Hz).
+    """
+    X, sample_rate = librosa.load(wav_file, res_type='kaiser_fast', sr=None)
+    mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T,axis=0)
+    return mfccs
