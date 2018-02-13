@@ -1,8 +1,10 @@
+import glob
 import IPython.display
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 from pydub import AudioSegment
 from scipy.io import wavfile
@@ -279,3 +281,43 @@ def extract_mfccs(wav_file):
     X, sample_rate = librosa.load(wav_file, res_type='kaiser_fast', sr=None)
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T,axis=0)
     return mfccs
+
+
+def grab_wavs(path):
+    """
+    Take a path to a directory and return a list containing
+    all .wav files within it.
+    """
+
+    # create regular expression
+    glob_regex = os.path.join(path, "*.wav")
+
+    # create a list of files
+    wav_files = glob.glob(glob_regex)
+
+    return wav_files
+
+
+def one_hot_encode_path(path_to_wav, category_index, categories_in_order):
+    """
+    Take a path to a wave file and the index at which the category name starts.
+    Uses the categories_in_order to figure out the index at which to put the 1.
+    Return a numpy array, one hot encoded.
+    """
+    # take the slice of the path that should begin with the category name
+    path_from_category = path_to_wav[category_index:]
+
+    # create a placeholder array
+    placeholder = np.zeros(len(categories_in_order))
+
+    # check if we found a match
+    is_matched = False
+
+    for i, category in enumerate(categories_in_order):
+        if path_from_category.startswith(category):
+            placeholder[i] = 1
+            is_matched = True
+            return placeholder
+
+    if not is_matched:
+        raise Exception("one_hot_encode_path failed to find a category match in the path!")
