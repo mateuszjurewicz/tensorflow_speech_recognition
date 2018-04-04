@@ -321,3 +321,38 @@ def one_hot_encode_path(path_to_wav, category_index, categories_in_order):
 
     if not is_matched:
         raise Exception("one_hot_encode_path failed to find a category match in the path!")
+
+
+def get_X_with_padding_mfccs(list_of_paths, columns=16000):
+    """
+    A version of get_X_with_padding that uses extract_mfccs instead of get_wav_info.
+    Iterates over all file paths and extracts mfcc data from them, with default column
+    number equal to 16K sampling rate, with padding of 0s.
+    """
+    # get shape data
+    rows = len(list_of_paths)
+    dimensions = (rows, columns)
+
+    # create placeholder
+    matrix = np.array([])
+
+    # go through every file path in the list
+    for path_to_wav in list_of_paths:
+        # get raw array of signed ints
+        row = extract_mfccs(path_to_wav)
+
+        # some of our sample have less (or slightly more) than 16000 values, so let's adjust them
+        # trim to fixed length
+        row = row[:columns]
+
+        # pad with zeros, calculating amount of padding needed
+        padding = columns - len(row)
+        row = np.pad(row, (0, padding), mode='constant', constant_values=0)
+
+        # append the new row
+        matrix = np.append(matrix, row)
+
+    # reshape (unroll)
+    matrix = np.reshape(matrix, dimensions)
+
+    return matrix
