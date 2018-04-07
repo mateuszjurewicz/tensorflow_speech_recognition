@@ -356,3 +356,33 @@ def get_X_with_padding_mfccs(list_of_paths, columns=16000):
     matrix = np.reshape(matrix, dimensions)
 
     return matrix
+
+
+def one_hot_encode(a_matrix):
+    """
+    Takes a matrix of presumably softmaxed predictions and turns it into
+    a one-hot-encoded matrix, to be passed to e.g. F1 score calculating function,
+    """
+
+    # store results in a new matrix
+    original_shape = a_matrix.shape
+    one_hot_encoded_matrix = np.zeros(original_shape)
+
+    # obtain the index of the highest value in a row
+    for i, row in enumerate(a_matrix):
+        max_row_value = 0
+        max_row_value_index = 0
+
+        for j, elem in enumerate(row):
+
+            # if the current element has a higher value then any previously found
+            if elem > max_row_value:
+                # update highest value found for this row
+                max_row_value = elem
+                # update the highest value index
+                max_row_value_index = j
+
+        # once we iterated over all elements in a row, we can alter our end-result matrix
+        one_hot_encoded_matrix[i][max_row_value_index] = 1
+
+    return one_hot_encoded_matrix
