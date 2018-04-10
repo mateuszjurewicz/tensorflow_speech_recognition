@@ -386,3 +386,22 @@ def one_hot_encode(a_matrix):
         one_hot_encoded_matrix[i][max_row_value_index] = 1
 
     return one_hot_encoded_matrix
+
+
+def reverse_one_hot_encoding(a_matrix):
+    """
+    Take a one-hot encoded matrix and return a vector with the row value
+    representing the original column index of the 1, per row in original matrix.
+    """
+
+    # get shape
+    result_vector = np.zeros((a_matrix.shape[0], 1))
+
+    # fill
+    for i, row in enumerate(a_matrix):
+        for j, elem in enumerate(row):
+            if elem == 1:
+                # to avoid class 0, add 1
+                result_vector[i] = j + 1
+
+    return result_vector
