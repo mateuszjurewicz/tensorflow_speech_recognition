@@ -14,7 +14,11 @@ def get_wav_info(wav_file):
     """
     Read a wav file returning the sample rate (number of audio samples per second, in Hz) and the actual raw data.
     """
+    # read the data 
     rate, data = wavfile.read(wav_file)
+   
+    # on linux systems we have to cast the data to float64 (as opposed to default int16)
+    data = data.astype(np.float64)
     return rate, data
 
 
@@ -32,7 +36,7 @@ def graph_waveform(wav_file):
     """
     Graph a waveform from a .wav file.
     """
-    data, sampling_rate = librosa.load(wav_file)
+    sampling_rate, data = get_wav_info(wav_file)
     plt.figure(figsize=(12, 4))
     librosa.display.waveplot(data, sr=sampling_rate)
 

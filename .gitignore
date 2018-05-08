@@ -5,6 +5,7 @@
 mixed_sounds.wav
 
 # Dataset folders
+backup/
 test/
 train/
 train_backup/
