@@ -8,6 +8,7 @@ import os
 
 from pydub import AudioSegment
 from scipy.io import wavfile
+from scipy.fftpack import fft
 
 
 def get_wav_info(wav_file):
@@ -285,6 +286,30 @@ def extract_mfccs(wav_file):
     X, sample_rate = librosa.load(wav_file, res_type='kaiser_fast', sr=None)
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T,axis=0)
     return mfccs
+
+
+def extract_fft(wav_file):
+    """
+    Take a file and return the fast fourier transform.
+    """
+    sr, raw_data = get_wav_info(wav_file)
+    
+    # normalize
+    normalized_data = [(e/2**8)*2-1 for e in raw_data]
+    
+    # fast fourier transform
+    fft_data = fft(normalized_data)
+
+    return fft_data
+
+
+def plot_fft(wavfile):
+    """
+    Take a .wav file, extract fast fourier transfrom and plot, taking into consideration signal symmetry.
+    """
+    fft_data = extract_fft(wavfile)
+    symmetry_cutoff = len(fft_data)//2
+    plt.plot(abs(fft_data[:symmetry_cutoff-1]), 'b')
 
 
 def grab_wavs(path):
