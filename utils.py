@@ -288,6 +288,16 @@ def extract_mfccs(wav_file):
     return mfccs
 
 
+def extract_tempogram(wav_file):
+    """
+    Take a file and return the temopgram matrix. 
+    """
+    sr, raw_data = get_wav_info(wav_file)
+    tempogram_data = librosa.feature.tempogram(raw_data, sr)
+
+    return tempogram_data
+    
+
 def extract_fft(wav_file):
     """
     Take a file and return the fast fourier transform.
