@@ -362,11 +362,63 @@ def one_hot_encode_path(path_to_wav, category_index, categories_in_order):
         raise Exception("one_hot_encode_path failed to find a category match in the path!")
 
 
-def get_X_with_padding_mfccs(list_of_paths, columns=16000):
+def get_y(list_of_wavs, character_offset, categories):
+    """
+    Take a list of paths to .wav files, an integer specifying where the name of the category
+    folder begins in the path string (.e.g "left" or "down") and a list of categories in order.
+
+    Retrun a numpy ndarray with the one-hot-encoded target.
+    """
+    result = np.array([])
+    
+    # append each row to the result matrix
+    for path_to_wav in list_of_wavs:
+        row = one_hot_encode_path(path_to_wav, character_offset, categories)
+        result = np.append(result, row)
+
+    # this results in a flattend vector, so reshape it
+    rows = len(list_of_wavs)
+    columns = len(categories)
+    result = np.reshape(result, (rows, columns))
+
+    return result 
+
+
+def get_X(list_of_paths, column_num):
+    """
+    Take a list of paths to .wav files, and the desired number of output columns.
+    Return a matrix with the raw extracted .wav data, padding the rows to the desired column number.
+    """
+    # get dimensions
+    rows = len(list_of_paths)
+    dimensions = (rows, column_num)
+
+    # placeholder
+    X = np.array([])
+
+    # iterate
+    for path_to_wav in list_of_paths:
+        row = get_wav_info(path_to_wav)[1]
+
+        # trim  & pad to desired dimensions
+        row = row[:column_num]
+        padding = column_num - len(row)
+        row = np.pad(row, (0, padding), mode='constant', constant_values=0)
+
+        # append
+        X = np.append(X, row)
+
+    # reshape (unroll)
+    X = np.reshape(X, dimensions)
+
+    return X
+
+        
+def get_X_mfccs(list_of_paths, columns=40):
     """
     A version of get_X_with_padding that uses extract_mfccs instead of get_wav_info.
     Iterates over all file paths and extracts mfcc data from them, with default column
-    number equal to 16K sampling rate, with padding of 0s.
+    number equal to 40.
     """
     # get shape data
     rows = len(list_of_paths)
@@ -395,6 +447,42 @@ def get_X_with_padding_mfccs(list_of_paths, columns=16000):
     matrix = np.reshape(matrix, dimensions)
 
     return matrix
+
+
+def get_X_mel_spectrogram(list_of_paths, shape=(128, 32)):
+    """
+    A version of get_X  that uses extract_mel_spectrogram instead of get_wav_info.
+    Iterates over all file paths and extracts mfcc data from them, with default matrix shape
+    of 128x32.
+    """
+    # get shape data
+    rows = len(list_of_paths)
+
+    # create placeholder
+    X = np.array([])
+
+    # go through every file path in the list
+    for path_to_wav in list_of_paths:
+
+        # get raw array of signed ints
+        sr, raw_data = get_wav_info(path_to_wav)
+        
+        # some of our sample have less (or slightly more) than 16000 values, so let's adjust them
+        # trim to fixed length
+        row = row[:columns]
+
+        # pad with zeros, calculating amount of padding needed
+        padding = columns - len(row)
+        row = np.pad(row, (0, padding), mode='constant', constant_values=0)
+
+        # append the new row
+        matrix = np.append(matrix, row)
+
+    # reshape (unroll)
+    matrix = np.reshape(matrix, dimensions)
+
+    return matrix
+
 
 
 def one_hot_encode(a_matrix):
