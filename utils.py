@@ -453,20 +453,63 @@ def get_X_mel_spectrogram(list_of_paths, shape=(128, 32)):
     """
     A version of get_X  that uses extract_mel_spectrogram instead of get_wav_info.
     Iterates over all file paths and extracts mfcc data from them, with default matrix shape
-    of 128x32.
+    of 128x32
     """
     # get shape data
     rows = len(list_of_paths)
 
-    # create placeholder
-    X = np.array([])
-
+    # create a placeholder for final result
+    result = np.array([])
+    
     # go through every file path in the list
     for path_to_wav in list_of_paths:
 
         # get raw array of signed ints
         sr, raw_data = get_wav_info(path_to_wav)
+        mel_spectrogram = librosa.feature.melspectrogram(raw_data, sr)
+
+        # trim and pad samples with more/less columns than expected
+        placeholder = np.array([])
+        for row in mel_spectrogram:
+
+            # trim first
+            row = row[:shape[1]]
+
+            # pad with zeros
+            padding = shape[1] - len(row)
+            row = np.pad(row, (0, padding), mode="constant", constant_values=0)
+
+            # append to placeholder (flattened)
+            placeholder = np.append(placeholder, row)
+
+        # append the placeholder to final matrix
+        result = np.append(result, placeholder)
+
+    # reshape into a 3-dim matrix
+    result = np.reshape(result, (len(list_of_paths), shape[0], shape[1]))
+
+    return result
+
+
+def get_X_fft(list_of_paths, columns=16000):
+    """
+    A version of get_X that uses extract_fft instead of get_wav_info.
+    Iterates over all file paths and extracts fft data from them, with default column
+    number equal to 16000.
+    """
+    # get shape data
+    rows = len(list_of_paths)
+    dimensions = (rows, columns)
+
+    # create placeholder
+    matrix = np.array([])
+
+    # go through every file path in the list
+    for path_to_wav in list_of_paths:
         
+        # get FFT data
+        row = extract_fft(path_to_wav)
+
         # some of our sample have less (or slightly more) than 16000 values, so let's adjust them
         # trim to fixed length
         row = row[:columns]
@@ -481,8 +524,51 @@ def get_X_mel_spectrogram(list_of_paths, shape=(128, 32)):
     # reshape (unroll)
     matrix = np.reshape(matrix, dimensions)
 
+    # cast to float64 to be able to persist via bcolz
+    matrix = matrix.astype(np.float64)
+
     return matrix
 
+
+def get_X_tempogram(list_of_paths, shape=(384, 32)):
+    """
+    A version of get_X  that uses extract_tempogram instead of get_wav_info.
+    Iterates over all file paths and extracts tepogram data from them, with default matrix shape
+    of 384x32.
+    """
+    # get shape data
+    rows = len(list_of_paths)
+
+    # create a placeholder for final result
+    result = np.array([])
+    
+    # go through every file path in the list
+    for path_to_wav in list_of_paths:
+
+        # get raw array of signed ints
+        tempogram = extract_tempogram(path_to_wav)
+
+        # trim and pad samples with more/less columns than expected
+        placeholder = np.array([])
+        for row in tempogram:
+
+            # trim first
+            row = row[:shape[1]]
+
+            # pad with zeros
+            padding = shape[1] - len(row)
+            row = np.pad(row, (0, padding), mode="constant", constant_values=0)
+
+            # append to placeholder (flattened)
+            placeholder = np.append(placeholder, row)
+
+        # append the placeholder to final matrix
+        result = np.append(result, placeholder)
+
+    # reshape into a 3-dim matrix
+    result = np.reshape(result, (len(list_of_paths), shape[0], shape[1]))
+
+    return result
 
 
 def one_hot_encode(a_matrix):
