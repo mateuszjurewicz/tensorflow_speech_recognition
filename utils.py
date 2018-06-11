@@ -278,13 +278,20 @@ def augment_with_shift(input_file, output_path, shift_factor=None):
     return output_path
 
 
-def extract_mfccs(wav_file):
+def extract_mfccs(wav_file, columns=100, mean=True):
     """
-    Take a file and return the mel-frequency cepstrum.
+    Take a file and return the mel-frequency cepstrum coefficients.
     Use the file's default sampling rate (instead of librosa's 22050Hz).
     """
     X, sample_rate = librosa.load(wav_file, res_type='kaiser_fast', sr=None)
-    mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T,axis=0)
+
+    # extract MFCCs
+    mfccs = librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=columns)
+
+    # if we were told to extract the mean and return a 1D vector per .wav...
+    if mean:
+        mfccs = np.mean(mfccs.T, axis=0)
+
     return mfccs
 
 
@@ -414,39 +421,71 @@ def get_X(list_of_paths, column_num):
     return X
 
         
-def get_X_mfccs(list_of_paths, columns=40):
+def get_X_mfccs(list_of_paths, shape=(100, 32), mean=True):
     """
     A version of get_X_with_padding that uses extract_mfccs instead of get_wav_info.
-    Iterates over all file paths and extracts mfcc data from them, with default column
-    number equal to 40.
+    Iterates over all file paths and extracts mfcc data from them, with a default shape.
     """
     # get shape data
     rows = len(list_of_paths)
-    dimensions = (rows, columns)
+    dimensions = (rows, shape[0])
 
     # create placeholder
     matrix = np.array([])
 
-    # go through every file path in the list
-    for path_to_wav in list_of_paths:
-        # get raw array of signed ints
-        row = extract_mfccs(path_to_wav)
+    # if we are supposed to output 1D-vector (mean=True)...
+    if mean:
 
-        # some of our sample have less (or slightly more) than 16000 values, so let's adjust them
-        # trim to fixed length
-        row = row[:columns]
+        # go through every file path in the list
+        for path_to_wav in list_of_paths:
 
-        # pad with zeros, calculating amount of padding needed
-        padding = columns - len(row)
-        row = np.pad(row, (0, padding), mode='constant', constant_values=0)
+            # get raw array of signed ints (or matrix, if mean=False)
+            row = extract_mfccs(path_to_wav, shape[0], mean)
 
-        # append the new row
-        matrix = np.append(matrix, row)
+            # some of our sample have less (or slightly more) than 16000 values, so let's adjust them
+            # trim to fixed length
+            row = row[:shape[0]]
 
-    # reshape (unroll)
-    matrix = np.reshape(matrix, dimensions)
+            # pad with zeros, calculating amount of padding needed
+            padding = shape[0] - len(row)
+            row = np.pad(row, (0, padding), mode='constant', constant_values=0)
 
-    return matrix
+            # append the new row
+            matrix = np.append(matrix, row)
+
+        # reshape (unroll)
+        matrix = np.reshape(matrix, dimensions)
+
+        return matrix
+
+    # else, we're returning a 2D matrix for every call to extract_mfccs()
+    else:
+        for path_to_wav in list_of_paths:
+
+            # get the 2D matrix
+            mfcc_matrix = extract_mfccs(path_to_wav, columns=shape[0], mean=mean)
+
+            # trim and pad
+            placeholder = np.array([])
+            for row in mfcc_matrix:
+
+                # trim first
+                row = row[:shape[1]]
+
+                # pad
+                padding = shape[1] - len(row)
+                row = np.pad(row, (0, padding), mode="constant", constant_values=0)
+
+                # append to placeholder (flattened)
+                placeholder = np.append(placeholder, row) 
+
+            # append the placeholder to the final matrix
+            matrix =  np.append(matrix, placeholder)
+
+        # reshape into a 3D matrix [constant 32]
+        matrix = np.reshape(matrix, (len(list_of_paths), shape[0], shape[1]))
+
+        return matrix
 
 
 def get_X_mel_spectrogram(list_of_paths, shape=(128, 32)):
