@@ -278,6 +278,25 @@ def augment_with_shift(input_file, output_path, shift_factor=None):
     return output_path
 
 
+def augment_with_stretch(input_file, output_path, stretch_factor=1.2):
+    """
+    Take a .wav input_file, stretcht its content by the value of stretch_factor.
+    Save the new .wav file in output_path. You can also adjust the amount of stretching
+    via the stretch_factor. Otherwise a default value will be used.
+    """
+    # grab the content of the .wav input_file and the sampling rate
+    sr, data = get_wav_info(input_file)
+
+    # stretch the data by the stretch_factor
+    data_stretched = librosa.effects.time_stretch(data, stretch_factor)
+
+    # create the file with shifted data
+    wavfile.write(output_path, sr, data_stretched)
+
+    # return the path to the created file
+    return output_path
+
+
 def extract_mfccs(wav_file, columns=100, mean=True):
     """
     Take a file and return the mel-frequency cepstrum coefficients.
