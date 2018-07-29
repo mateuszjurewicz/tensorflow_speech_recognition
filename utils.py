@@ -439,6 +439,46 @@ def get_X(list_of_paths, column_num):
 
     return X
 
+
+def get_X_with_counter(list_of_paths, column_num):
+    """
+    Take a list of paths to .wav files, and the desired number of output columns.
+    Return a matrix with the raw extracted .wav data, padding the rows to the desired column number.
+    Show progress via counter.
+    """
+    # counter
+    counter = 0
+
+    # get dimensions
+    rows = len(list_of_paths)
+    dimensions = (rows, column_num)
+
+    # placeholder
+    X = np.array([])
+
+    # iterate
+    for path_to_wav in list_of_paths:
+        row = get_wav_info(path_to_wav)[1]
+
+        # trim  & pad to desired dimensions
+        row = row[:column_num]
+        padding = column_num - len(row)
+        row = np.pad(row, (0, padding), mode='constant', constant_values=0)
+
+        # append
+        X = np.append(X, row)
+
+        # show counter every 100 steps
+        if counter % 10 == 0:
+             print(counter, end=" ")
+	
+        counter += 1
+
+    # reshape (unroll)
+    X = np.reshape(X, dimensions)
+
+    return X
+
         
 def get_X_mfccs(list_of_paths, shape=(100, 32), mean=True):
     """
