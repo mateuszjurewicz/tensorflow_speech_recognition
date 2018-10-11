@@ -1,3 +1,4 @@
+import bcolz
 import glob
 import IPython.display
 import librosa
@@ -17,7 +18,7 @@ def get_wav_info(wav_file):
     """
     # read the data 
     rate, data = wavfile.read(wav_file)
-   
+
     # on linux systems we have to cast the data to float64 (as opposed to default int16)
     data = data.astype(np.float64)
     return rate, data
@@ -322,17 +323,17 @@ def extract_tempogram(wav_file):
     tempogram_data = librosa.feature.tempogram(raw_data, sr)
 
     return tempogram_data
-    
+
 
 def extract_fft(wav_file):
     """
     Take a file and return the fast fourier transform.
     """
     sr, raw_data = get_wav_info(wav_file)
-    
+
     # normalize
     normalized_data = [(e/2**8)*2-1 for e in raw_data]
-    
+
     # fast fourier transform
     fft_data = fft(normalized_data)
 
@@ -396,18 +397,18 @@ def get_y(list_of_wavs, character_offset, categories):
     Retrun a numpy ndarray with the one-hot-encoded target.
     """
     result = np.array([])
-    
+
     # append each row to the result matrix
     for path_to_wav in list_of_wavs:
         row = one_hot_encode_path(path_to_wav, character_offset, categories)
         result = np.append(result, row)
 
-    # this results in a flattend vector, so reshape it
+    # this results in a flattened vector, so reshape it
     rows = len(list_of_wavs)
     columns = len(categories)
     result = np.reshape(result, (rows, columns))
 
-    return result 
+    return result
 
 
 def get_X(list_of_paths, column_num):
@@ -439,7 +440,7 @@ def get_X(list_of_paths, column_num):
 
     return X
 
-        
+
 def get_X_mfccs(list_of_paths, shape=(100, 32), mean=True):
     """
     A version of get_X_with_padding that uses extract_mfccs instead of get_wav_info.
@@ -496,7 +497,7 @@ def get_X_mfccs(list_of_paths, shape=(100, 32), mean=True):
                 row = np.pad(row, (0, padding), mode="constant", constant_values=0)
 
                 # append to placeholder (flattened)
-                placeholder = np.append(placeholder, row) 
+                placeholder = np.append(placeholder, row)
 
             # append the placeholder to the final matrix
             matrix =  np.append(matrix, placeholder)
@@ -518,7 +519,7 @@ def get_X_mel_spectrogram(list_of_paths, shape=(128, 32)):
 
     # create a placeholder for final result
     result = np.array([])
-    
+
     # go through every file path in the list
     for path_to_wav in list_of_paths:
 
@@ -564,7 +565,7 @@ def get_X_fft(list_of_paths, columns=16000):
 
     # go through every file path in the list
     for path_to_wav in list_of_paths:
-        
+
         # get FFT data
         row = extract_fft(path_to_wav)
 
@@ -599,7 +600,7 @@ def get_X_tempogram(list_of_paths, shape=(384, 32)):
 
     # create a placeholder for final result
     result = np.array([])
-    
+
     # go through every file path in the list
     for path_to_wav in list_of_paths:
 
@@ -676,3 +677,14 @@ def reverse_one_hot_encoding(a_matrix):
                 result_vector[i] = j + 1
 
     return result_vector
+
+
+# define the bcolz array saving function
+def bcolz_save(fname, arr):
+    c = bcolz.carray(arr, rootdir=fname, mode='w')
+    c.flush()
+
+
+# define the bcolz array loading function
+def bcolz_load(fname):
+    return bcolz.open(fname)[:]
