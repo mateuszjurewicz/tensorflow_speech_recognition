@@ -11,6 +11,8 @@ train/
 train_backup/
 data/
 models/
+tf_logs/
+scratchpad.py
 
 # Sample submissions
 sample_submission.csv
