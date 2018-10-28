@@ -7,6 +7,7 @@ import os
 NUM_X_SUBSETS = 7
 X_SIZE = 16000
 NUM_CLASSES = 12
+LEARNING_RATE = 0.0001
 
 # log level
 tf.logging.set_verbosity(tf.logging.DEBUG)
@@ -61,9 +62,41 @@ if __name__ == "__main__":
 
     # same for CV & test
     print("Expanding the dimensions of the X cv & test subsets ...")
-    expanded_cv_X = np.expand_dims(cv_X, axis=2)
-    expanded_test_X = np.expand_dims(test_X, axis=2)
+    cv_X = np.expand_dims(cv_X, axis=2)
+    print("Expanded X cv shape: {}".format(cv_X.shape))
+    test_X = np.expand_dims(test_X, axis=2)
+    print("Expanded X test shape: {}".format(test_X.shape))
 
-    # TODO follow this guy: https://github.com/easy-tensorflow/easy-tensorflow/blob/master/6_Convolutional_Neural_Network/code/main.py
-    # NO - BUILD IT STEP BY STEP YOURSELF, STARTING WITH A SIMPLE MODEL
-    # MAY HAVE TO JUST FOLLOW THE TF BOOK - FIND A 1D Conv example in it
+    # TODO: train a simple 1D CNN
+    # input is too big to be a variable, has to be a placeholder that is then fed via a feed dict
+    X = tf.placeholder(tf.float32, shape=(train_X.shape[0], X_SIZE, 1))
+    y = tf.placeholder(tf.float32, shape=(train_y.shape[0], NUM_CLASSES))
+
+    # declare a variable-initializing op
+    init = tf.global_variables_initializer()
+
+    # declare an op to control dropout
+    keep_prob = tf.placeholder(tf.float32)
+
+    # tf session
+    with tf.Session() as sess:
+
+        # MODEL ARCHITECTURE
+        x = tf.layers.batch_normalization(inputs=X)
+        x = tf.layers.conv1d(x, filters=64, kernel_size=3, padding='same')
+        x = tf.nn.relu(x)
+        # maxpool followed by flatten = global maxpool
+        x = tf.layers.max_pooling1d(x, pool_size=2, strides=2, padding="same")
+        x = tf.layers.flatten(x)
+        x = tf.layers.dense(x, units=1000)
+        x = tf.layers.dense(x, units=NUM_CLASSES)
+        preds = tf.nn.softmax(x)
+
+        # MODEL TRAINING
+        loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=preds, labels=y))
+        optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE).minimize(loss)
+        correct_prediction = tf.equal(tf.argmax(preds, 1), tf.argmax(y, 1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+        # run the session, feeding it the appropriate data
+        sess.run(init, feed_dict={X: train_X, y: train_y})
