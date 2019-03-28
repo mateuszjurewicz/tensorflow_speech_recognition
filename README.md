@@ -13,7 +13,7 @@ provided by the creators of the challenge, as well as both **keras** and
 **tensorflow** scripts to train convolutional models on the preprocessed data.
 
 This includes:
-1) ![Jupyter Notebooks Logo](https://ibb.co/jVrr8Yw.png "Jupyter Notebook Logo")
+1) ![Jupyter Notebooks Logo](https://i.ibb.co/KNrr5gs/jupyter-logo.png "Jupyter Notebook Logo")
 Splitting the raw data into balanced data sets
 2) Data investigation and visualization
 3) Preprocessing and data augmentation
