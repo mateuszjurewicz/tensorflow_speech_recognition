@@ -23,14 +23,14 @@ This includes, in sequential order:
 5) Three ways to train the final models with Jupyter, Keras and Tensorflow ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo") ![Keras Logo](https://i.ibb.co/NVBJ83Z/keras-logo-small.png "Keras Logo") ![Tensorflow Logo](https://i.ibb.co/fdksYmS/tensorflow-logo-small.png "Tensorflow Logo")
 
 ## Table of Contents
-- [Intro](##Intro)
-- [Setup](##Setup)
-- [Usage](##Usage)
-  - [Data Processing](###Data Processing)
-  - [Model Training](###Model Training)
-- [Acknowledgements](##Acknowledgements)
-- [References](##References)
-- [License](##License)
+- [Intro](#intro)
+- [Setup](#setup)
+- [Usage](#usage)
+  - [Data Processing](#data-processing)
+  - [Model Training](#model-training)
+- [Acknowledgements](#acknowledgements)
+- [References](#references)
+- [License](#license)
 
 ## Setup
 WIP
