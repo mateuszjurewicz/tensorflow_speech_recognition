@@ -20,6 +20,26 @@ This includes, in sequential order:
 2) Data investigation and visualization ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
 3) Preprocessing and data augmentation ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
 4) Model experiments on a small sample set ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
-5) Three ways to train the final model with Jupyter, Keras and Tensorflow ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo") ![Keras Logo](https://i.ibb.co/NVBJ83Z/keras-logo-small.png "Keras Logo") ![Tensorflow Logo](https://i.ibb.co/fdksYmS/tensorflow-logo-small.png "Tensorflow Logo")
+5) Three ways to train the final models with Jupyter, Keras and Tensorflow ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo") ![Keras Logo](https://i.ibb.co/NVBJ83Z/keras-logo-small.png "Keras Logo") ![Tensorflow Logo](https://i.ibb.co/fdksYmS/tensorflow-logo-small.png "Tensorflow Logo")
 
 ## Table of Contents
+- [Intro](##Intro)
+- [Setup](##Setup)
+- [Usage](##Usage)
+  - [Data Processing](###Data Processing)
+  - [Model Training](###Model Training)
+- [Acknowledgements](##Acknowledgements)
+- [References](##References)
+- [License](##License)
+
+## Setup
+WIP
+## Usage
+WIP
+### Data Processing
+WIP
+### Model Training
+WIP
+## Acknowledgements
+## References
+## License
