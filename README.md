@@ -60,7 +60,7 @@ part, a CPU should suffice.
 Below are my **personal opinions** on viable options for individual ML 
 enthusiasts, none of the below-mentioned providers are sponsoring me in any 
 way. I've also provided links to useful articles about the different options
-in the [References](#references) section (sources [1][1] to [7][7]).
+in the [References](#references) section (sources [1](#1) to [7](#7)).
  
 There are good options available from cloud providers like Paperspace or Amazon
 Web Services, which I have personal experience with, or you can look into 
