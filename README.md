@@ -17,6 +17,9 @@ provided by the creators of the challenge, as well as both **keras** and
 **tensorflow** scripts to train convolutional machine learning models on the 
 preprocessed data.
 
+Developed & tested on a Paperspace cloud instance with an NVIDIA Quadro P6000
+(Pascal generation) graphics card, with an Ubuntu 16.04 (Xenial) OS.
+
 This includes, in sequential order:
 
 1) Splitting the raw data into balanced data sets ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
@@ -28,6 +31,7 @@ This includes, in sequential order:
 ## Table of Contents
 - [Intro](#intro)
 - [Setup](#setup)
+  - [Data Source](#data-soruce)
   - [Hardware](#hardware)
   - [Software](#software)
 - [Usage](#usage)
@@ -38,11 +42,66 @@ This includes, in sequential order:
 - [License](#license)
 
 ## Setup
-WIP
+This section will guide you through setting up everything that you'll need to
+follow along. 
+
+This includes obtaining the raw data from the Kaggle [data source](#data-source), checking 
+[hardware](#hardware) requirements and installing the proper [software](#software) 
+libraries, in your preferred virtual environment.
+
+### Data Source
+TODO
+
 ### Hardware
-WIP
+I recommend using a GPU machine. On pure CPU the training code may 
+take hours to finish. However, if you're only interested in the preprocessing 
+part, a CPU should suffice.
+
+Below are my **personal opinions** on viable options for individual ML 
+enthusiasts, none of the below-mentioned providers are sponsoring me in any 
+way. I've also provided links to useful articles about the different options
+in the [References](#references) section (sources [1] to [7]).
+ 
+There are good options available from cloud providers like Paperspace or Amazon
+Web Services, which I have personal experience with, or you can look into 
+Azure, Floydhub, Crestle, Hetzner and Google Cloud which have been 
+recommended to me by other ML engineers. 
+
+If you choose to go with a cloud-based solution, you may consider the 
+dedicated Paperspace instances with these Pascal generation GPUs (costs from 
+early 2019):
+
+1. NVIDIA Quadro P6000 (24GB GPU memory) for $1.10/h (the version on which 
+this repo was developed)
+2. NVIDIA Quadro P5000 (16GB GPU memory) for $0.78/h
+3. V100 (Volta architecture, 16GB GPU memory) for $2.30/h
+
+The AWS recommended alternative would be the p3.xlarge instances with Volta 
+generation GPUs, namely the Tesla V100. A more affordable alternative could 
+be p2.xlarge instances with a Tesla K80, from an older generation.
+
+If you choose to build your own box or have one available to you, I can 
+personally recommend the GTX 1080 Ti for $700. 
+
+To figure out what GPU is available on your machine, you can e.g. run:
+
+    glxinfo | grep OpenGL
+ 
 ### Software
-WIP
+
+To check the version of CUDA you can use:
+
+    nvcc --version
+    
+To check the version of cuDNN, you first need to find the `cudnn.h` file:
+
+    whereis cudnn.h
+    
+And then to actually check the version, depending on the location use:
+
+    ﻿cat /some/location/cudnn.h | grep CUDNN_MAJOR -A 2
+
+
 ## Usage
 WIP
 ### Data Processing
@@ -51,4 +110,18 @@ WIP
 WIP
 ## Acknowledgements
 ## References
+Original Kaggle challenge:
+- [0] https://www.kaggle.com/c/tensorflow-speech-recognition-challenge
+
+On GPU machines, both in the cloud and build-a-box:
+
+- [1] http://forums.fast.ai/t/cost-effectiveness-of-the-different-cloud-server-renting-options/7300
+- [2] https://medium.com/initialized-capital/benchmarking-tensorflow-performance-and-cost-across-different-gpu-options-69bd85fe5d58
+- [3] https://www.paperspace.com/pricing
+- [4] https://rare-technologies.com/machine-learning-benchmarks-hardware-providers-gpu-part-2/
+- [5] https://towardsdatascience.com/how-the-f-does-nvidia-name-gpus-aef9c684362a
+- [6] https://aws.amazon.com/ec2/instance-types/
+- [7] https://blog.slavv.com/the-1700-great-deep-learning-box-assembly-setup-and-benchmarks-148c5ebe6415
+- [8] https://www.ec2instances.info/?region=eu-west-1
+- [9] https://aws.amazon.com/ec2/pricing/on-demand/
 ## License
