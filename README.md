@@ -34,6 +34,9 @@ This includes, in sequential order:
   - [Data Source](#data-soruce)
   - [Hardware](#hardware)
   - [Software](#software)
+    - [Virtual Environment](#virtual-environment)
+    - [Requirements](#requirements)
+    - [CUDA and cudNN](#cuda-and-cudnn)
 - [Usage](#usage)
   - [Data Processing](#data-processing)
   - [Model Training](#model-training)
@@ -50,7 +53,16 @@ This includes obtaining the raw data from the Kaggle [data source](#data-source)
 libraries, in your preferred virtual environment.
 
 ### Data Source
-TODO
+In order to participate in Kaggle challenges you need to register an account 
+on their website. Once you have a verified username and password, you can 
+install their [kaggle cli](https://github.com/Kaggle/kaggle-api "Kaggle Cli Repository on Github")
+tool and use the following command to download the original raw data:
+
+    kaggle competitions download -c tensorflow-speech-recognition-challenge
+    
+Alternatively, if you're not interested in the preprocessing and just want to
+jump straight to training models, you can download the processed bcolz 
+files from [the internet archive](https://archive.org/details/voice_data "Internet Archive link with processed bcolz files").
 
 ### Hardware
 I recommend using a GPU machine. On pure CPU the training code may 
@@ -89,6 +101,47 @@ To figure out what GPU is available on your machine, you can e.g. run:
  
 ### Software
 
+This was developed and tested on Python 3.6.3.
+
+#### Virtual Environment
+
+I recommend using the **venv** python module with pip for a virtual environment
+or the package, dependency and environment management system such as **conda**. 
+
+To install the venv library via pip:
+
+    pip install virtualenv
+    
+To create your custom virtual environment:
+
+    python3 -m venv /path/to/your/virtual/environment
+    
+You can then activate that virtual environment on Mac and Linux via:
+
+    source <venv>/bin/activate
+    
+And on Windows via:
+
+    <venv>\Scripts\activate
+    
+where <venv> is your custom virtual environment path.
+
+#### Requirements
+
+You can easily install all required python libraries by using the **req.txt** 
+file, within your activated virtual environment:
+
+    pip install -r req.txt
+    
+Or, if you're using conda:
+
+    conda install --file req.txt 
+
+#### CUDA and cudNN
+
+You may also want to double-check that you've got the right versions of the 
+NVIDIA software.
+
 To check the version of CUDA you can use:
 
     nvcc --version
@@ -101,6 +154,9 @@ And then to actually check the version, depending on the location use:
 
     ﻿cat /some/location/cudnn.h | grep CUDNN_MAJOR -A 2
 
+If you don't have CUDA installed, you can download it from the NVIDIA 
+[CUDA webpage](https://developer.nvidia.com/cuda-90-download-archive "Nvidia's CUDA download address")
+and follow the installation instructions provided by them, per OS.
 
 ## Usage
 WIP
