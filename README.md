@@ -42,6 +42,7 @@ This includes, in sequential order:
   - [Model Training](#model-training)
 - [Acknowledgements](#acknowledgements)
 - [References](#references)
+- [Contribute](#contribute)
 - [License](#license)
 
 ## Setup
@@ -158,6 +159,9 @@ If you don't have CUDA installed, you can download it from the NVIDIA
 [CUDA webpage](https://developer.nvidia.com/cuda-90-download-archive "Nvidia's CUDA download address")
 and follow the installation instructions provided by them, per OS.
 
+The [tensorflow GPU support](https://www.tensorflow.org/install/gpu "Tensorflow CUDA installation instructions page")
+page can also be helpful in setting this up.
+
 ## Usage
 WIP
 ### Data Processing
@@ -165,6 +169,31 @@ WIP
 ### Model Training
 WIP
 ## Acknowledgements
+
+I would like to give a huge amount of thanks and recognition to the entire 
+Kaggle community, which is always great at exchanging ideas, things that 
+worked and, equally importantly, *the things that did not*, once the challenges 
+are done. I believe that *that* is a crucially valuable stage of the process.
+
+In particular, the relatively simple deep convolutional model that I settled 
+on after trying more complex ensemble methods and e.g. a partially 
+retrained version of Keras' ResNet50 on variously preprocessed 2D data, can 
+be read about in this [kaggle discussion](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/discussion/47618 "Kaggle discussion on 1D convolutional models")
+thread.
+
+I would therefore like to highlight [Sukjae Cho](https://www.kaggle.com/jandjenter),
+[은주니(ttagu99)](https://www.kaggle.com/ttagu99) and [vinvinvin](https://www.kaggle.com/vinvinvin).
+
+Additionally, I would like to give special thanks to the entire FastAi 
+community, particularly the 2 people who originally decided to make neural 
+networks uncool again - [Jeremy Howard](https://www.fast.ai/about/#jeremy) and [Rachel Thomas](https://www.fast.ai/about/#rachel).
+
+Since this is meant as a helpful guide for people with various levels of 
+experience in the field, I would also like to point the beginners to a great 
+introductory [Stanford ML course](https://www.coursera.org/learn/machine-learning "Coursera ML 101 course") by Andrew Ng, 
+available on Coursera, which helped me tremendously back when I was beginning
+my adventures with machine learning and data science. 
+
 ## References
 Original Kaggle challenge:
 - [0] https://www.kaggle.com/c/tensorflow-speech-recognition-challenge
@@ -180,4 +209,22 @@ On GPU machines, both in the cloud and build-a-box:
 - [7] https://blog.slavv.com/the-1700-great-deep-learning-box-assembly-setup-and-benchmarks-148c5ebe6415
 - [8] https://www.ec2instances.info/?region=eu-west-1
 - [9] https://aws.amazon.com/ec2/pricing/on-demand/
+
+Papers with code, always a great thing and this needs to become a standard:
+
+- [10] https://paperswithcode.com/sota
+
+## Contribute
+
+Contributions are always welcome! 
+
+If you find an error, a false assumption in the rationale behind the data 
+processing, a good way to improve the overall performance of the code or the
+models - please reach out via email at the address given in my github bio or
+propose a fix by opening a PR, following the [contribution guidelines](contribute.md).
+ 
 ## License
+![GNU 3](https://i.ibb.co/3RcsTNw/gnu-license-small.png "GNU Copyleft logo")
+
+To the extent possible under law, the author has waived all copyright and 
+related or neighboring rights to this work.
