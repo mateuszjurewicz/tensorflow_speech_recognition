@@ -316,6 +316,19 @@ were excluded.
 ##### 4. Model training - full set
 
 In the [fourth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/4.%20Model%20training%20-%20full%20set.ipynb "Link to the fourth notebook")
+we finally address the imbalance of the data in the main sets and attempt to 
+apply the most successful model architectures tested on sample to the entirety
+of our data.
+
+Additionally a list of some of the mislabelled examples is provided. 
+Mislabelled data is the hard reality of a data scientist's daily work and 
+including it in the challenge mirrors real life. 
+
+We then proceed to preprocess and persist the main sets.
+
+Finally the best models reach a **validation accuracy of > 0.81**, and those 
+are the ones whose architecture we recreate in the model training scripts 
+described below.
 
 ### Model Training
 WIP
