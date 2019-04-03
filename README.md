@@ -174,7 +174,7 @@ model training scripts in jupyter + keras, pure keras and pure tensorflow.
 
 What we get from Kaggle in terms of training data is a set of .wav files, 
 split into folders named after one of 30 categories. Some of these are 
-mislabelled. Their name also contains and identifier of the person who said 
+mislabelled. Their name also contains an identifier of the person who said 
 them, which will be important when balancing our dataset.
 
 We are only meant to predict 12 categories, with the remaining 
@@ -185,8 +185,8 @@ belonging to the _silence_ category.
 ##### 0. Separation for training, validation and sample
 
 In the [zeroth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/0.%20Separation%20for%20training%2C%20validation%20and%20sample.ipynb "Link to the zeroth jupyter notebook")
-we use the provided testing_list.txt and validation_list.txt lists to split the 
-original train set into main/test, main/cv and main/train (by moving files). 
+we use the provided _testing_list.txt_ and _validation_list.txt_ lists to split 
+the original train set into main/test, main/cv and main/train (by moving files). 
 
 My hope is that this notebook will make you more comfortable with using the 
 **glob** library in order to manipulate the file structure of your data.
@@ -194,7 +194,7 @@ My hope is that this notebook will make you more comfortable with using the
 This has the  benefit of putting files recorded by the same person in only 
 one subset, so the model can't latch onto a person's voice characteristics. 
 This ensures that there's **no data leakage**. Otherwise the model could 
-learn that a specific person's voice characteristics are always tied to one 
+learn that a specific person's vocal qualities are always tied to one 
 category, leading to overfitting.
 
 We're also preparing a smaller **sample set**, further separated into 
@@ -215,7 +215,7 @@ leakage.
 
 It is important to notice that in main/test we now have 250 examples per 
 category, but in the case of _unknown_ we have over 4000 examples. In main/train
-we have 1850 examples per category and 32K in unknown. This makes our 
+we have 1850 examples per category and 32K in _unknown_. This makes our 
 main data set very unbalanced (no such problems for the sample set). We will 
 handle this in the main model training notebook (the fourth one).
 
@@ -231,26 +231,24 @@ examples.
 
 Looking at the images obtained by applying these kinds of transformations to 
 our sound samples can give us an idea of the features e.g. convolutional 
-layers of our models might be able to latch onto. 
-
+layers of our models might be able to latch onto during the learning. 
 
 ##### 2. Preprocessing and data augmentation
 
 In the [second notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/2.%20Preprocessing%20and%20data%20augmentation.ipynb "Link to the second notebook")
-
-This notebook's goal is to use various preprocessing / data augmentation 
-techniques that are known to work well on audio data, in order to obtain and 
-eventually persist these preprocessed subsets. 
+we use various preprocessing / data augmentation techniques that are known to
+work well on audio data, in order to obtain and eventually persist these 
+preprocessed subsets. 
 
 This way we can have a lot of different possible inputs when we test 
 various model architectures later on, without the need to do this 
 preprocessing "live", every time we load a new batch of data. The alternative
 is to embed the preprocessing into our data _generators_, in python terms.
 
-In terms of preprocessing we are turning our audio files into:
+As part of preprocessing we are turning our audio files into:
 1. MFCCs (MEL Frequency Cepstrum Coefficients)
 2. Mel spectrograms
-3. FFT (apply the Fast Fourier Transform)
+3. FFT (applying the Fast Fourier Transform)
 4. Tempograms
     
 We are also augmenting the data through adding varying levels of background 
@@ -333,7 +331,7 @@ described below.
 
 ### Model Training
 
-Finally, three separate scripts have been provided for training the final 
+Three separate scripts have been provided for training the final 
 models on the preprocessed data. If you want to just skip to this stage, you 
 can downloaded the properly preprocessed data as bcolz files from a link 
 provided at the end of the [Data Source](#data-source) section.
@@ -342,22 +340,19 @@ If you're just starting to learn about machine learning, I recommend
 continuing with the [jupyter + keras script](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/train_jupyter_keras.ipynb "Link to the model training notebook using keras and jupyter").
 
 If you feel more comfortable with the code, you can jump to the [keras script](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/train_keras.py "Link to the model training script in keras").
-called train_keras.py. It includes a command line argument parser which 
+called _train_keras.py_. It includes a command line argument parser which 
 explains all available parameters. E.g. to learn more about it, use:
 
     python3 train_keras.py --help
     
 This will explain that there are two main options for running this script:
 
-1) By providing the path to the preprocessed .bc files
-
-For example:
+By providing the path to the preprocessed .bc files, for example:
 
     python3 train_keras.py --path_to_data=data/main/preprocessed/
     
-2) By telling it to use randomly generated data (for code debugging)
-
-Such as this:
+Or by telling it to use randomly generated data (for code debugging), such as 
+this:
 
     python3 train_keras.py --random_data=True
 
