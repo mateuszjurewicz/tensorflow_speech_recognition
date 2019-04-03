@@ -182,7 +182,7 @@ ones becoming classified as _unknown_. There's also a _background_noise_
 folder containing longer samples, which we can use to obtain examples 
 belonging to the _silence_ category.
 
-##### 0. Separation for training, validation and sample
+#### 0. Separation for training, validation and sample
 
 In the [zeroth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/0.%20Separation%20for%20training%2C%20validation%20and%20sample.ipynb "Link to the zeroth jupyter notebook")
 we use the provided _testing_list.txt_ and _validation_list.txt_ lists to split 
@@ -219,7 +219,7 @@ we have 1850 examples per category and 32K in _unknown_. This makes our
 main data set very unbalanced (no such problems for the sample set). We will 
 handle this in the main model training notebook (the fourth one).
 
-##### 1. Visualization and data investigation
+#### 1. Visualization and data investigation
 
 In the [first notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/1.%20Visualization%20and%20data%20investigation.ipynb "Link to the first notebook")
 we'll be visualising our data as waveforms, spectrograms and chromagrams.
@@ -233,7 +233,7 @@ Looking at the images obtained by applying these kinds of transformations to
 our sound samples can give us an idea of the features e.g. convolutional 
 layers of our models might be able to latch onto during the learning. 
 
-##### 2. Preprocessing and data augmentation
+#### 2. Preprocessing and data augmentation
 
 In the [second notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/2.%20Preprocessing%20and%20data%20augmentation.ipynb "Link to the second notebook")
 we use various preprocessing / data augmentation techniques that are known to
@@ -260,7 +260,7 @@ Some of these methods can be stacked together, leading to a lot of possible
 combinations. Ultimately the best preprocessing method will be the one that 
 leads to the best models.
 
-##### 3. Model experiments - sample set
+#### 3. Model experiments - sample set
 
 In the [third notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/3.%20Model%20experiments%20-%20sample%20set.ipynb "Link to the third notebook")
 we experiment with simple models to assess the effectiveness of our 
@@ -312,7 +312,7 @@ performance improvement (e.g. transfer learning through unfreezing varying
 number of top layers of e.g. ResNet50 on 2D transformed data), hence they 
 were excluded.
 
-##### 4. Model training - full set
+#### 4. Model training - full set
 
 In the [fourth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/4.%20Model%20training%20-%20full%20set.ipynb "Link to the fourth notebook")
 we finally address the imbalance of the data in the main sets and attempt to 
