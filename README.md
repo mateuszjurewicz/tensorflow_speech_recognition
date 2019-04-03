@@ -237,9 +237,81 @@ layers of our models might be able to latch onto.
 
 In the [second notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/2.%20Preprocessing%20and%20data%20augmentation.ipynb "Link to the second notebook")
 
+This notebook's goal is to use various preprocessing / data augmentation 
+techniques that are known to work well on audio data, in order to obtain and 
+eventually persist these preprocessed subsets. 
+
+This way we can have a lot of different possible inputs when we test 
+various model architectures later on, without the need to do this 
+preprocessing "live", every time we load a new batch of data. The alternative
+is to embed the preprocessing into our data _generators_, in python terms.
+
+In terms of preprocessing we are turning our audio files into:
+1. MFCCs (MEL Frequency Cepstrum Coefficients)
+2. Mel spectrograms
+3. FFT (apply the Fast Fourier Transform)
+4. Tempograms
+    
+We are also augmenting the data through adding varying levels of background 
+noise to them, shifting the actual word utterance's position to later or 
+earlier within the recording and finally stretching (increasing the wavelength),
+to mimic differences in the timbre of people's voices.
+
+Some of these methods can be stacked together, leading to a lot of possible 
+combinations. Ultimately the best preprocessing method will be the one that 
+leads to the best models.
+
 ##### 3. Model experiments - sample set
 
 In the [third notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/3.%20Model%20experiments%20-%20sample%20set.ipynb "Link to the third notebook")
+we experiment with simple models to assess the effectiveness of our 
+preprocessing & data augmentation techniques by training on the small sample 
+set.
+
+The assumption is that techniques that worked well on a small section of data
+will generalize well to the entire set. A valid criticism here is that we are
+trying to estimate two things at the same time, one of which has an influence
+on the other. Namely we are trying to choose a preferred preprocessing 
+pipeline, whilst assessing model architectures by the models' performance.
+
+We could exhaustively test every possible combination of the preprocessing 
+methods on every model architecture, but this would be expensive in terms of 
+human time. Nevertheless any possible bias that we are aware of should be 
+clearly stated.
+
+One of the first things we do is **one-hot encoding our y**, our target 
+predictions. This simply means turning the category name into a vector of all
+zeroes and a single one, placed at the index corresponding to the class.
+
+We then proceed to preprocess and persist our data. After that we begin 
+experimenting with simple models, bearing in mind the random guessing 
+accuracy of 0.833% as the first threshold to beat.
+
+As our metrics we use recall, precision and F1 score, as this is a multiclass
+classification problem. The final Kaggle evaluation metric is multiclass 
+accuracy.
+
+The model architectures that are included are:
+
+1. Linear Models
+2. Random Forest Classifiers
+3. Multilayer Perceptron
+4. Simple, Fully-connected Neural Networks
+5. Deep Convolutional Neural Networks
+6. Gated Recurrent Unit Networks (GRU)
+7. Long Short Term Memory Networks (LSTM)
+
+The models are trained with different learning rates, solvers, regularization 
+and batch normalization. Hyperparameters have been tuned to maximize 
+performance. 
+
+The best performance has been harnessed from deep convolutional architectures
+on variously preprocessed data and thus we focused on them in the next notebook.
+
+Certain more expensive architectures were also tested without a noticeable 
+performance improvement (e.g. transfer learning through unfreezing varying 
+number of top layers of e.g. ResNet50 on 2D transformed data), hence they 
+were excluded.
 
 ##### 4. Model training - full set
 
