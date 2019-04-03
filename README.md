@@ -221,6 +221,17 @@ handle this in the main model training notebook (the fourth one).
 ##### 1. Visualization and data investigation
 
 In the [first notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/1.%20Visualization%20and%20data%20investigation.ipynb "Link to the first notebook")
+we'll be visualising our data as waveforms, spectrograms and chromagrams.
+
+It's often useful to get a set of eyes on the data you're working with. Doing
+this early in the process has many times allowed me to catch something that 
+would be important later on. In this case, we'll also want to listen to our 
+examples.
+
+Looking at the images obtained by applying these kinds of transformations to 
+our sound samples can give us an idea of the features e.g. convolutional 
+layers of our models might be able to latch onto. 
+
 
 ##### 2. Preprocessing and data augmentation
 
