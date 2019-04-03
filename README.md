@@ -40,6 +40,7 @@ This includes, in sequential order:
 - [Usage](#usage)
   - [Data Processing](#data-processing)
   - [Model Training](#model-training)
+- [Next Steps](#next-steps)
 - [Acknowledgements](#acknowledgements)
 - [References](#references)
 - [Contribute](#contribute)
@@ -331,7 +332,71 @@ are the ones whose architecture we recreate in the model training scripts
 described below.
 
 ### Model Training
-WIP
+
+Finally, three separate scripts have been provided for training the final 
+models on the preprocessed data. If you want to just skip to this stage, you 
+can downloaded the properly preprocessed data as bcolz files from a link 
+provided at the end of the [Data Source](#data-source) section.
+
+If you're just starting to learn about machine learning, I recommend 
+continuing with the [jupyter + keras script](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/train_jupyter_keras.ipynb "Link to the model training notebook using keras and jupyter").
+
+If you feel more comfortable with the code, you can jump to the [keras script](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/train_keras.py "Link to the model training script in keras").
+called train_keras.py. It includes a command line argument parser which 
+explains all available parameters. E.g. to learn more about it, use:
+
+    python3 train_keras.py --help
+    
+This will explain that there are two main options for running this script:
+
+1) By providing the path to the preprocessed .bc files
+
+For example:
+
+    python3 train_keras.py --path_to_data=data/main/preprocessed/
+    
+2) By telling it to use randomly generated data (for code debugging)
+
+Such as this:
+
+    python3 train_keras.py --random_data=True
+
+This script will also report information about the model architecture, the 
+progress in loading / generating the data and its final shapes, as well as 
+the performance of the trained model along epoch numbers.
+
+Finally, if you're only interested in building models in pure tensorflow, go for the [tensorflow script](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/train_tensorflow.py "Link to the model training script in tensorflow").
+
+It follows the same exact interface as the one above:
+
+    python3 train_tensorflow.py --help
+    python3 train_tensorflow.py --random_data=True
+    python3 train_tensorflow.py --path_to_data=your/data/path
+
+## Next Steps
+This section discusses possible ways of expanding this project, ways of 
+improving it and things that were left out.
+
+In terms of things that are missing, there's no code for persisting the 
+tensorflow models and reading them from disk. I've left that part 
+out as an interesting challenge for people following along, thinking that if 
+they are only interested in the Keras implementation, then with that library 
+persisting and reloading models is easy enough via the model interface. 
+
+Another big thing that's missing is the code for using the persisted models 
+to perform inference on the original Kaggle test set, formatting the output 
+in the accepted submission format and obtaining LB scores. 
+
+Something that should definitely be improved is the way data is fed into the 
+tensorflow model. Using feed dicts is the least optimal way to do things. The
+correct way to do it would be through custom batch generators. If you're 
+interested in that and in building proper tensorflow estimators, you can see 
+a good example of this in the work of [Alex Ozerin](https://www.kaggle.com/alexozerin),
+described in his post in source [10] in the references section.
+
+Finally, I've encountered certain problems with the batch normalization 
+training in the tensorflow script that are worth looking into, and can 
+sometimes prevent the models from converging.
 
 ## Acknowledgements
 
@@ -375,9 +440,13 @@ On GPU machines, both in the cloud and build-a-box:
 - [8] https://www.ec2instances.info/?region=eu-west-1
 - [9] https://aws.amazon.com/ec2/pricing/on-demand/
 
+Proper way to feed data to models in tensorflow through batch generators:
+
+- [10] https://www.kaggle.com/alexozerin/end-to-end-baseline-tf-estimator-lb-0-72
+
 Papers with code, always a great thing and this needs to become a standard:
 
-- [10] https://paperswithcode.com/sota
+- [11] https://paperswithcode.com/sota
 
 ## Contribute
 
