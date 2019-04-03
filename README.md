@@ -31,7 +31,7 @@ This includes, in sequential order:
 ## Table of Contents
 - [Intro](#intro)
 - [Setup](#setup)
-  - [Data Source](#data-soruce)
+  - [Data Source](#data-source)
   - [Hardware](#hardware)
   - [Software](#software)
     - [Virtual Environment](#virtual-environment)
@@ -49,7 +49,7 @@ This includes, in sequential order:
 This section will guide you through setting up everything that you'll need to
 follow along. 
 
-This includes obtaining the raw data from the Kaggle [data source](#data-source), checking 
+This includes obtaining the raw data from the Kaggle [data source](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data "Link to Kaggle's data description for this challenge"), checking 
 [hardware](#hardware) requirements and installing the proper [software](#software) 
 libraries, in your preferred virtual environment.
 
@@ -163,11 +163,80 @@ The [tensorflow GPU support](https://www.tensorflow.org/install/gpu "Tensorflow 
 page can also be helpful in setting this up.
 
 ## Usage
-WIP
+
+This section will give you a step-by-step understanding of what's achieved by
+each of the consecutive jupyter notebooks for the data preprocessing part of 
+this challenge, followed by an explanation of the various machine learning 
+model training scripts in jupyter + keras, pure keras and pure tensorflow. 
+
 ### Data Processing
-WIP
+
+What we get from Kaggle in terms of training data is a set of .wav files, 
+split into folders named after one of 30 categories. Some of these are 
+mislabelled. Their name also contains and identifier of the person who said 
+them, which will be important when balancing our dataset.
+
+We are only meant to predict 12 categories, with the remaining 
+ones becoming classified as _unknown_. There's also a _background_noise_ 
+folder containing longer samples, which we can use to obtain examples 
+belonging to the _silence_ category.
+
+##### 0. Separation for training, validation and sample
+
+In the [zeroth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/0.%20Separation%20for%20training%2C%20validation%20and%20sample.ipynb "Link to the zeroth jupyter notebook")
+we use the provided testing_list.txt and validation_list.txt lists to split the 
+original train set into main/test, main/cv and main/train (by moving files). 
+
+My hope is that this notebook will make you more comfortable with using the 
+**glob** library in order to manipulate the file structure of your data.
+
+This has the  benefit of putting files recorded by the same person in only 
+one subset, so the model can't latch onto a person's voice characteristics. 
+This ensures that there's **no data leakage**. Otherwise the model could 
+learn that a specific person's voice characteristics are always tied to one 
+category, leading to overfitting.
+
+We're also preparing a smaller **sample set**, further separated into 
+the expected train, test & validation subsets. The point of this is to be 
+able to test your code on a smaller slice of data and see if it runs to 
+completion, without expecting the models to achieve extremely high precision 
+or recall. Depending on its size, it can also allow us to iterate on 
+different model architectures quicker. In my professional experience, human time
+is often the scarcest resource, so using sample sets is always recommended.
+
+Finally, we also use the longer background noise files by cutting them down 
+into 1 second long .wav files, similar in length to the examples from other 
+categories.
+
+The end result is a file structure of the main and sample data, further 
+divided into train, test and cv subsets, in a way that should prevent data 
+leakage. 
+
+It is important to notice that in main/test we now have 250 examples per 
+category, but in the case of _unknown_ we have over 4000 examples. In main/train
+we have 1850 examples per category and 32K in unknown. This makes our 
+main data set very unbalanced (no such problems for the sample set). We will 
+handle this in the main model training notebook (the fourth one).
+
+##### 1. Visualization and data investigation
+
+In the [first notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/1.%20Visualization%20and%20data%20investigation.ipynb "Link to the first notebook")
+
+##### 2. Preprocessing and data augmentation
+
+In the [second notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/2.%20Preprocessing%20and%20data%20augmentation.ipynb "Link to the second notebook")
+
+##### 3. Model experiments - sample set
+
+In the [third notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/3.%20Model%20experiments%20-%20sample%20set.ipynb "Link to the third notebook")
+
+##### 4. Model training - full set
+
+In the [fourth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_recognition/blob/master/4.%20Model%20training%20-%20full%20set.ipynb "Link to the fourth notebook")
+
 ### Model Training
 WIP
+
 ## Acknowledgements
 
 I would like to give a huge amount of thanks and recognition to the entire 
