@@ -200,7 +200,7 @@ end result should look like this, with 12 subfolders one level down per
 directory, appropriate .wav files:
 
 <p align="center">
-  <a href="https://ibb.co/5TTt8bk"><img src="https://i.ibb.co/2qqmtGS/notebook-zero.png" alt="notebook-zero" border="0"></a>
+  <img src="./imgs/notebook_zero.png" alt="data directory tree">
 </p>
 
 We're also preparing a smaller **sample set**, further separated into 
