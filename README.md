@@ -220,7 +220,7 @@ divided into train, test and cv subsets, in a way that should prevent data
 leakage. The final counts of files per subset are:
 
 <p align="left">
-  <img src="./imgs/notebook_zero_counts.png" alt="data directory tree">
+  <img src="./imgs/notebook_zero_counts.png" alt="data directory tree" width="614" height="180">
 </p>
 
 It is important to notice that in main/test we now have 250 examples per 
