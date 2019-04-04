@@ -239,8 +239,8 @@ this early in the process has many times allowed me to catch something that
 would be important later on. In this case, we'll also want to listen to our 
 examples.
 
-Below we can see, in order, the waveforms, spectrogams & MEL spectrograms and
-finally the chromagram visualizations of our data:
+Below we can see, in order, the waveforms, spectrogams and MEL spectrograms 
+visualizations of our data:
 
 <p align="center">
   <img src="./imgs/notebook_one_waveform.png" alt="waveform image">
@@ -254,13 +254,15 @@ finally the chromagram visualizations of our data:
   <img src="./imgs/notebook_one_mel_spectrogram.png" alt="mel spectrogram image">
 </p>
 
-<p align="center">
-  <img src="./imgs/notebook_one_chromagram.png" alt="chromagram image">
-</p>
-
 Looking at the images obtained by applying these kinds of transformations to 
 our sound samples can give us an idea of the features e.g. convolutional 
 layers of our models might be able to latch onto during the learning. 
+
+Below, as a bonus, you can see the chromagram visualizations:
+
+<p align="center">
+  <img src="./imgs/notebook_one_chromagram.png" alt="chromagram image">
+</p>
 
 #### 2. Preprocessing and data augmentation
 
