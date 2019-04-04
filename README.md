@@ -278,7 +278,7 @@ is to embed the preprocessing into our data _generators_, in python terms.
 
 As part of preprocessing we are turning our audio files into:
 1. MFCCs (MEL Frequency Cepstrum Coefficients)
-2. Mel spectrograms
+2. Mel Spectrograms
 3. FFT (applying the Fast Fourier Transform)
 4. Tempograms
     
@@ -286,6 +286,12 @@ We are also augmenting the data through adding varying levels of background
 noise to them, shifting the actual word utterance's position to later or 
 earlier within the recording and finally stretching (increasing the wavelength),
 to mimic differences in the timbre of people's voices.
+
+Here's the effect of adding randomized background noise to a waveform:
+
+<p align="center">
+  <img src="./imgs/notebook_two_background_noise.png" alt="waveform with and without background noise">
+</p>
 
 Some of these methods can be stacked together, leading to a lot of possible 
 combinations. Ultimately the best preprocessing method will be the one that 
