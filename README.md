@@ -343,6 +343,11 @@ performance.
 
 The best performance has been harnessed from deep convolutional architectures
 on variously preprocessed data and thus we focused on them in the next notebook.
+Below is a visual representation of the basics behind convolutional classifiers:
+
+![Convolutional Classifier](https://cdn-images-1.medium.com/max/1600/1*NQQiyYqJJj4PSYAeWvxutg.png "Convolutional Architecture")
+
+Courtesy of source [12].
 
 Certain more expensive architectures were also tested without a noticeable 
 performance improvement (e.g. transfer learning through unfreezing varying 
@@ -479,6 +484,10 @@ Proper way to feed data to models in tensorflow through batch generators:
 Papers with code, always a great thing and this needs to become a standard:
 
 - [11] https://paperswithcode.com/sota
+
+Deep learning course, source of the image regarding convolutional architectures:
+
+- [12] https://www.mathworks.com/videos/introduction-to-deep-learning-what-are-convolutional-neural-networks--1489512765771.html
 
 ## Contribute
 
