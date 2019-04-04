@@ -255,7 +255,7 @@ finally the chromagram visualizations of our data:
 </p>
 
 <p align="center">
-  <img src="./imgs/notebook_one_mel_chromagram.png" alt="chromagram image">
+  <img src="./imgs/notebook_one_chromagram.png" alt="chromagram image">
 </p>
 
 Looking at the images obtained by applying these kinds of transformations to 
