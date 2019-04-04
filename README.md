@@ -220,7 +220,7 @@ divided into train, test and cv subsets, in a way that should prevent data
 leakage. The final counts of files per subset are:
 
 <p align="left">
-  <img src="./imgs/notebook_zero_counts.png" alt="data directory tree">
+  <img src="./imgs/notebook_zero_counts.png" alt="directory file counts">
 </p>
 
 It is important to notice that in main/test we now have 250 examples per 
@@ -238,6 +238,25 @@ It's often useful to get a set of eyes on the data you're working with. Doing
 this early in the process has many times allowed me to catch something that 
 would be important later on. In this case, we'll also want to listen to our 
 examples.
+
+Below we can see, in order, the waveforms, spectrogams & MEL spectrograms and
+finally the chromagram visualizations of our data:
+
+<p align="center">
+  <img src="./imgs/notebook_one_waveform.png" alt="waveform image">
+</p>
+
+<p align="center">
+  <img src="./imgs/notebook_one_spectrogram.png" alt="spectrogram image">
+</p>
+
+<p align="center">
+  <img src="./imgs/notebook_one_mel_spectrogram.png" alt="mel spectrogram image">
+</p>
+
+<p align="center">
+  <img src="./imgs/notebook_one_mel_chromagram.png" alt="chromagram image">
+</p>
 
 Looking at the images obtained by applying these kinds of transformations to 
 our sound samples can give us an idea of the features e.g. convolutional 
