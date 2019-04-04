@@ -372,7 +372,7 @@ are the ones whose architecture we recreate in the model training scripts
 described below.
 
 <p align="center">
-  <img src="./imgs/notebook_four_val_acc" alt="epoch with .81 val accuracy">
+  <img src="./imgs/notebook_four_val_acc.png" alt="epoch with .81 val accuracy">
 </p>
 
 
