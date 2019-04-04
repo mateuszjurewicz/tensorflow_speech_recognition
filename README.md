@@ -203,10 +203,10 @@ directory, appropriate .wav files:
   <img src="./imgs/notebook_zero.png" alt="data directory tree">
 </p>
 
-We're also preparing a smaller **sample set**, further separated into 
-the expected train, test & validation subsets. The point of this is to be 
-able to test your code on a smaller slice of data and see if it runs to 
-completion, without expecting the models to achieve extremely high precision 
+As you can see, we're also preparing a smaller **sample set**, further 
+separated into the expected train, test & validation subsets. The point of 
+this is to be able to test your code on a smaller slice of data and see if it
+runs to completion, without expecting the models to achieve extremely high precision 
 or recall. Depending on its size, it can also allow us to iterate on 
 different model architectures quicker. In my professional experience, human time
 is often the scarcest resource, so using sample sets is always recommended.
@@ -217,7 +217,11 @@ categories.
 
 The end result is a file structure of the main and sample data, further 
 divided into train, test and cv subsets, in a way that should prevent data 
-leakage. 
+leakage. The final counts of files per subset are:
+
+<p align="left">
+  <img src="./imgs/notebook_zero_with_counts.png" alt="data directory tree">
+</p>
 
 It is important to notice that in main/test we now have 250 examples per 
 category, but in the case of _unknown_ we have over 4000 examples. In main/train
