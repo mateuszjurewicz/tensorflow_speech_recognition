@@ -371,6 +371,11 @@ Finally the best models reach a **validation accuracy of > 0.81**, and those
 are the ones whose architecture we recreate in the model training scripts 
 described below.
 
+<p align="center">
+  <img src="./imgs/notebook_four_val_acc" alt="epoch with .81 val accuracy">
+</p>
+
+
 ### Model Training
 
 Three separate scripts have been provided for training the final 
