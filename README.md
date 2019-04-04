@@ -199,7 +199,7 @@ My hope is that this notebook will make you more comfortable with using the
 end result should look like this, with 12 subfolders one level down per 
 directory, appropriate .wav files:
 
-<p align="center">
+<p align="left">
   <img src="./imgs/notebook_zero.png" alt="data directory tree">
 </p>
 
