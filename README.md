@@ -188,14 +188,20 @@ In the [zeroth notebook](https://github.com/mateuszjurewicz/tensorflow_speech_re
 we use the provided _testing_list.txt_ and _validation_list.txt_ lists to split 
 the original train set into main/test, main/cv and main/train (by moving files). 
 
-My hope is that this notebook will make you more comfortable with using the 
-**glob** library in order to manipulate the file structure of your data.
-
 This has the  benefit of putting files recorded by the same person in only 
 one subset, so the model can't latch onto a person's voice characteristics. 
 This ensures that there's **no data leakage**. Otherwise the model could 
 learn that a specific person's vocal qualities are always tied to one 
 category, leading to overfitting.
+
+My hope is that this notebook will make you more comfortable with using the 
+**glob** library in order to manipulate the file structure of your data. The 
+end result should look like this, with 12 subfolders one level down per 
+directory, appropriate .wav files:
+
+<p align="center">
+  <a href="https://ibb.co/5TTt8bk"><img src="https://i.ibb.co/2qqmtGS/notebook-zero.png" alt="notebook-zero" border="0"></a>
+</p>
 
 We're also preparing a smaller **sample set**, further separated into 
 the expected train, test & validation subsets. The point of this is to be 
