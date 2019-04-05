@@ -27,7 +27,6 @@ learning_rate = 0.0001
 num_epochs = 100
 
 input_features = 16000  # X.shape is [-1, input_features]
-# num_batches = 693  # 22176 divided into batches of size 32
 num_x_subsets = 7  # due to memory, we've split the X into these many subsets
 num_classes = 12
 
@@ -323,9 +322,19 @@ if __name__ == '__main__':
     show_update_ops(logger)
     show_trainable_vars(logger)
 
+    # tensorboard ops
+    tf.summary.scalar("loss", loss)
+    merged_summary_op = tf.summary.merge_all()
+
     # session
     sess = tf.InteractiveSession()
     sess.run(tf.global_variables_initializer())
+
+    # tensorboard logdir and writer
+    import os
+
+    logdir = os.path.join(os.getcwd(), 'tf_logs')
+    summary_writer = tf.summary.FileWriter(logdir, graph=tf.get_default_graph())
 
     # train
     for epoch in range(num_epochs + 1):
@@ -360,7 +369,9 @@ if __name__ == '__main__':
                          in_training: True}
 
             # calculate batch loss
-            _, batch_loss = sess.run([train_op, loss], feed_dict=feed_dict)
+            _, batch_loss, summary = sess.run([train_op, loss,
+                                               merged_summary_op],
+                                              feed_dict=feed_dict)
 
             # add batch loss to total epoch loss
             epoch_loss += batch_loss
@@ -375,6 +386,8 @@ if __name__ == '__main__':
             # sh
             if i % 25 == 0:
                 logger.info('Batch: {} loss = {:5f}'.format(i+1, batch_loss))
+                summary_writer.add_summary(summary, i)
+                summary_writer.flush()
 
         if epoch % 1 == 0:
 
@@ -393,3 +406,5 @@ if __name__ == '__main__':
                 accuracy.eval(feed_dict={inputs: cv_X,
                                          labels: cv_y,
                                          in_training: False})))
+    # flush the writer
+    summary_writer.close()
