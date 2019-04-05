@@ -413,7 +413,7 @@ It follows the same exact interface as the one above:
 
     python3 train_tensorflow.py --help
     python3 train_tensorflow.py --random_data=True
-    python3 train_tensorflow.py --path_to_data=your/data/path
+    python3 train_tensorflow.py --path_to_data=/your/data/path
     
 You can also start a tensorboard server in a separate terminal and point it 
 to your preferred directory for storing logs:
@@ -428,6 +428,9 @@ curtailing the repetitive dual convolutional blocks:
 <p align="center">
   <img src="./imgs/graph_1.png" alt="tensorboard model graph">
 </p>
+
+In case you're interested in setting up a good system of monitoring your 
+scalars and histograms through tensorboard, I recommend source [13].
 
 ## Next Steps
 This section discusses possible ways of expanding this project, ways of 
@@ -507,6 +510,10 @@ Papers with code, always a great thing and this needs to become a standard:
 Deep learning course, source of the image regarding convolutional architectures:
 
 - [12] https://www.mathworks.com/videos/introduction-to-deep-learning-what-are-convolutional-neural-networks--1489512765771.html
+
+Good tutorial on setting up tensorboard monitoring:
+
+- [13] https://www.datacamp.com/community/tutorials/tensorboard-tutorial
 
 ## Contribute
 
