@@ -178,6 +178,13 @@ def create_parser():
                           help="Boolean marking whether random data is to be"
                                " used (when actual data has not been "
                                "donwloaded).")
+    # tensorboard logdir
+    a_parser.add_argument("--logdir",
+                          type=str,
+                          default="tf_logs",
+                          help="String representing the logdir to which"
+                               "a running instance of tensorboard has been"
+                               "pointed to.")
 
     return a_parser
 
@@ -324,6 +331,7 @@ if __name__ == '__main__':
 
     # tensorboard ops
     tf.summary.scalar("loss", loss)
+    tf.summary.scalar("accuracy", accuracy)
     merged_summary_op = tf.summary.merge_all()
 
     # session
@@ -331,9 +339,7 @@ if __name__ == '__main__':
     sess.run(tf.global_variables_initializer())
 
     # tensorboard logdir and writer
-    import os
-
-    logdir = os.path.join(os.getcwd(), 'tf_logs')
+    logdir = params.logdir
     summary_writer = tf.summary.FileWriter(logdir, graph=tf.get_default_graph())
 
     # train
@@ -383,7 +389,7 @@ if __name__ == '__main__':
             # Run the optimization step
             train_op.run(feed_dict=feed_dict)
 
-            # sh
+            # log every 25 batches
             if i % 25 == 0:
                 logger.info('Batch: {} loss = {:5f}'.format(i+1, batch_loss))
                 summary_writer.add_summary(summary, i)
