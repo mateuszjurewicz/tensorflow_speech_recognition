@@ -30,7 +30,7 @@ This includes, in sequential order:
 
 Running the final tensorflow script and then viewing the different run results
 in tensorboard looks like this:
-![](imgs/run_1.gif)
+![](imgs/run_1.mp4)
 
 ## Table of Contents
 - [Intro](#intro)
