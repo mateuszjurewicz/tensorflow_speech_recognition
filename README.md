@@ -28,6 +28,10 @@ This includes, in sequential order:
 4) Model experiments on a small sample set ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
 5) Three ways to train the final models with Jupyter, Keras and Tensorflow ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo") ![Keras Logo](https://i.ibb.co/NVBJ83Z/keras-logo-small.png "Keras Logo") ![Tensorflow Logo](https://i.ibb.co/fdksYmS/tensorflow-logo-small.png "Tensorflow Logo")
 
+Running the final tensorflow script and then viewing the different run results
+in tensorboard looks like this:
+![](imgs/run_1.gif)
+
 ## Table of Contents
 - [Intro](#intro)
 - [Setup](#setup)
@@ -433,7 +437,7 @@ curtailing the repetitive dual convolutional blocks:
 
 And here are the early loss and accuracy metrics from 2 separate runs:
 
-<p align="center">
+<p align="left">
   <img src="./imgs/tensorboard_early_metrics.png" alt="tensorboard early metrics">
 </p>
 
