@@ -416,10 +416,11 @@ It follows the same exact interface as the one above:
     python3 train_tensorflow.py --path_to_data=/your/data/path
     
 You can also start a tensorboard server in a separate terminal and point it 
-to your preferred directory for storing logs:
+to your preferred directory for storing logs, as well as name separate runs:
 
     tensorboard --logdir=path/to/directory
     python3 train_tensorflow.py --logdir=/path/to/directory
+    python3 train_tensorflow.py --logdir=tf_logs --logrun=first
     
 Then, after running the _train_tensorflow.py_ script, you should be able to 
 go to **localhost:6006** and see the graph and the summaries of the loss and 
@@ -428,6 +429,12 @@ curtailing the repetitive dual convolutional blocks:
 
 <p align="center">
   <img src="./imgs/graph_1.png" alt="tensorboard model graph">
+</p>
+
+And here are the early loss and accuracy metrics from 2 separate runs:
+
+<p align="center">
+  <img src="./imgs/tensorboard_early_metrics.png" alt="tensorboard early metrics">
 </p>
 
 In case you're interested in setting up a good system of monitoring your 
