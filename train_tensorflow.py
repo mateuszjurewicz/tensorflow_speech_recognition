@@ -333,7 +333,7 @@ if __name__ == '__main__':
         train_op = tf.group([train_step, update_ops])
 
     # inspect the ops (looking for moving average in batchnorm update ops)
-    show_update_ops(logger)
+    # show_update_ops(logger)
     show_trainable_vars(logger)
 
     # tensorboard ops
