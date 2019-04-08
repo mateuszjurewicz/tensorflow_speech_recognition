@@ -185,6 +185,13 @@ def create_parser():
                           help="String representing the logdir to which"
                                "a running instance of tensorboard has been"
                                "pointed to.")
+    # tensorboard logdir
+    a_parser.add_argument("--logrun",
+                          type=str,
+                          default="latest",
+                          help="String representing the training run, which "
+                               "will become a subdirectory in the logdir, read "
+                               "by tensorboard for metrics visualizations.")
 
     return a_parser
 
@@ -330,17 +337,27 @@ if __name__ == '__main__':
     show_trainable_vars(logger)
 
     # tensorboard ops
-    tf.summary.scalar("loss", loss)
-    tf.summary.scalar("accuracy", accuracy)
+    with tf.name_scope('performance'):
+        tf.summary.scalar("loss", loss)
+        tf.summary.scalar("accuracy", accuracy)
     merged_summary_op = tf.summary.merge_all()
 
     # session
     sess = tf.InteractiveSession()
     sess.run(tf.global_variables_initializer())
 
-    # tensorboard logdir and writer
+    # extract the tensorboard logdir from params
     logdir = params.logdir
-    summary_writer = tf.summary.FileWriter(logdir, graph=tf.get_default_graph())
+    logrun = params.logrun
+
+    # create log directory and run subdirectory, if not present
+    if not os.path.exists(logdir):
+        os.mkdir(logdir)
+    if not os.path.exists(os.path.join(logdir, logrun)):
+        os.mkdir(os.path.join(logdir, logrun))
+
+    summary_writer = tf.summary.FileWriter(os.path.join(logdir, logrun),
+                                           graph=tf.get_default_graph())
 
     # train
     for epoch in range(num_epochs + 1):

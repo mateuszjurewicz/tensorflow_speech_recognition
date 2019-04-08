@@ -13,6 +13,9 @@ data/
 models/
 scratchpad.py
 
+# ignore logs
+tf_logs/*
+
 # Sample submissions
 sample_submission.csv
 

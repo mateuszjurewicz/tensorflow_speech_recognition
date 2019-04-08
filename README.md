@@ -419,6 +419,7 @@ You can also start a tensorboard server in a separate terminal and point it
 to your preferred directory for storing logs:
 
     tensorboard --logdir=path/to/directory
+    python3 train_tensorflow.py --logdir=/path/to/directory
     
 Then, after running the _train_tensorflow.py_ script, you should be able to 
 go to **localhost:6006** and see the graph and the summaries of the loss and 
@@ -430,7 +431,7 @@ curtailing the repetitive dual convolutional blocks:
 </p>
 
 In case you're interested in setting up a good system of monitoring your 
-scalars and histograms through tensorboard, I recommend source [13].
+scalars and histograms through tensorboard, take a deeper look at source [13].
 
 ## Next Steps
 This section discusses possible ways of expanding this project, ways of 
