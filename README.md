@@ -22,11 +22,11 @@ Developed & tested on a Paperspace cloud instance with an NVIDIA Quadro P6000
 
 This includes, in sequential order:
 
-1) Splitting the raw data into balanced data sets ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
-2) Data investigation and visualization ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
-3) Preprocessing and data augmentation ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
-4) Model experiments on a small sample set ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo")
-5) Three ways to train the final models with Jupyter, Keras and Tensorflow ![Jupyter Notebooks Logo](https://i.ibb.co/KxLnVRY/jupyter-logo-small.png "Jupyter Notebook Logo" =50x50) ![Keras Logo](https://i.ibb.co/NVBJ83Z/keras-logo-small.png "Keras Logo" =50x50) ![Tensorflow Logo](https://i.ibb.co/fdksYmS/tensorflow-logo-small.png "Tensorflow Logo" =50x50)
+1) Splitting the raw data into balanced data sets
+2) Data investigation and visualization
+3) Preprocessing and data augmentation
+4) Model experiments on a small sample set
+5) Three ways to train the final models with Jupyter, Keras and Tensorflow
 
 Running the final tensorflow script and then viewing the different run results
 in tensorboard looks like this:
